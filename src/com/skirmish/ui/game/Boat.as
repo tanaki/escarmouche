@@ -8,9 +8,9 @@ package com.skirmish.ui.game
 	public class Boat extends BasicUI
 	{
 		
-		public function Boat(name:String) 
+		public function Boat() 
 		{
-			super(name);
+			super("boat_"+Math.round(Math.random()*10000));
 			init();
 		}
 		

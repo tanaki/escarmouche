@@ -8,9 +8,9 @@ package com.skirmish.ui.game
 	public class ControlPanel extends BasicUI
 	{
 		
-		public function ControlPanel(name:String) 
+		public function ControlPanel(revert:Boolean = false) 
 		{
-			super(name);
+			super("controlPanel_"+Math.round(Math.random()*10000));
 			init();
 		}
 		
