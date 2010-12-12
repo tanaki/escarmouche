@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<application xmlns="http://ns.adobe.com/air/application/2.0">
+	
+	<id>com.skirmish.SkirmishAIR</id> 
+	<version>0.1</version> 
+	<filename>SkirmishAIR</filename> 
+	
+	<name>Skirmish</name> 
+	<description></description> 
+	<copyright></copyright> 
+	
+	<initialWindow> 
+		<title>SkirmishAIR</title> 
+		<content>SkirmishAIR.swf</content> 
+		<systemChrome>standard</systemChrome> 
+		<transparent>false</transparent> 
+		<visible>true</visible> 
+		<minimizable>false</minimizable> 
+		<maximizable>false</maximizable> 
+		<resizable>false</resizable> 
+	</initialWindow>
+	
+	<!-- 
+	More options:
+	http://livedocs.adobe.com/flex/3/html/File_formats_1.html#1043413
+	-->
+</application>
