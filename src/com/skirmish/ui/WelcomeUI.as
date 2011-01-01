@@ -57,7 +57,11 @@ package com.skirmish.ui
 			x = (Config.STAGE_WIDTH - width) >> 1;
 			y = (Config.STAGE_HEIGHT - height) >> 1;
 			
-			eaze(this).apply( { alpha : 0 } ).to(1, { alpha : 1 } );
+			eaze(this).apply( { alpha : 0 } ).to(1, { alpha : 1 } ).onComplete(onEndOpen);
+		}
+		
+		private function onEndOpen():void 
+		{
 			super.open();
 		}
 		

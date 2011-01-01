@@ -1,7 +1,9 @@
 package com.skirmish 
 {
 	import aze.motion.eaze;
+	import com.nicolaspigelet.utils.NumberUtils;
 	import com.skirmish.data.Config;
+	import com.skirmish.ui.game.Boat;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import org.tuio.ITuioListener;
@@ -11,13 +13,11 @@ package com.skirmish
 	/**
 	 * @author Nicolas Pigelet aka tanaki
 	 */
-	public class TuioListener implements ITuioListener
+	public class TuioListener extends Sprite implements ITuioListener
 	{
-		private var container : Sprite;
-		
-		public function TuioListener(container : Sprite) 
+		public function TuioListener() 
 		{
-			container = container;
+			
 		}
 		
 		/**
@@ -27,13 +27,11 @@ package com.skirmish
 		public function addTuioObject(tuioObject:TuioObject):void 
 		{
 			trace("add::TuioObject");
-			var s : Shape = new Shape();
-			s.name = tuioObject.sessionID.toString();
-			s.graphics.beginFill(0xff9900);
-			s.graphics.drawCircle(0, 0, 20);
-			s.x = tuioObject.x * Config.STAGE_WIDTH;
-			s.y = tuioObject.y * Config.STAGE_HEIGHT;
-			container.addChild(s);
+			var boat : Boat = new Boat();
+			boat.name = tuioObject.sessionID.toString();
+			boat.move(tuioObject.x * Config.STAGE_WIDTH, tuioObject.y * Config.STAGE_HEIGHT, NumberUtils.toDeg(tuioObject.a) );
+			addChild(boat);
+			
 		}
 		
 		/**
@@ -43,8 +41,7 @@ package com.skirmish
 		public function updateTuioObject(tuioObject:TuioObject):void
 		{
 			trace("update::TuioObject");
-			eaze(Shape(container.getChildByName(tuioObject.sessionID.toString())))
-				.to(.2, { x : tuioObject.x * Config.STAGE_WIDTH, y : tuioObject.y * Config.STAGE_HEIGHT } );
+			Boat(getChildByName(tuioObject.sessionID.toString())).move(tuioObject.x * Config.STAGE_WIDTH, tuioObject.y * Config.STAGE_HEIGHT, NumberUtils.toDeg(tuioObject.a) , true);
 		}
 		
 		/**
@@ -54,9 +51,8 @@ package com.skirmish
 		public function removeTuioObject(tuioObject:TuioObject):void
 		{
 			trace("remove::TuioObject");
-			container.removeChild( Shape(container.getChildByName(tuioObject.sessionID.toString())));
+			removeChild( Boat(getChildByName(tuioObject.sessionID.toString())) );
 		}
-
 		
 		/**
 		 * Called if a new cursor was tracked.

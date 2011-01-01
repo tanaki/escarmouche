@@ -1,9 +1,8 @@
 package com.skirmish
 {
-	import aze.motion.easing.Back;
-	import aze.motion.eaze;
 	import br.com.stimuli.loading.BulkLoader;
 	import br.com.stimuli.loading.BulkProgressEvent;
+	
 	import com.skirmish.assets.Background;
 	import com.skirmish.data.Config;
 	import com.skirmish.events.SkirmishEvent;
@@ -11,14 +10,11 @@ package com.skirmish
 	import com.skirmish.ui.GameUI;
 	import com.skirmish.ui.UIList;
 	import com.skirmish.ui.WelcomeUI;
-	import flash.display.Shape;
+	
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import flash.filters.BlurFilter;
-	import flash.filters.GlowFilter;
-	import flash.text.StyleSheet;
 	import flash.utils.Dictionary;
-	import mx.skins.halo.ApplicationBackground;
+	
 	import org.tuio.connectors.UDPConnector;
 	import org.tuio.TuioClient;
 	
@@ -58,7 +54,7 @@ package com.skirmish
 		
 		private function onProgress(e:BulkProgressEvent):void 
 		{
-			trace(e._percentLoaded * 100);
+			//trace(e._percentLoaded * 100);
 		}
 		
 		private function onLoadComplete (e:BulkProgressEvent) :void
@@ -70,27 +66,29 @@ package com.skirmish
 			initGraphics();
 			
 			welcomeScreen = new WelcomeUI( UIList.WELCOME_UI );
+			welcomeScreen.dispatcher.addEventListener(SkirmishEvent.UI_CLOSE, initGame);
+			
 			addChild(welcomeScreen);
 			welcomeScreen.open();
-			
-			welcomeScreen.dispatcher.addEventListener(SkirmishEvent.UI_CLOSE, initGame);
 		}
 		
 		private function initGame(e:Event):void 
 		{
 			gameScreen = new GameUI(UIList.GAME_UI);
+			gameScreen.dispatcher.addEventListener(SkirmishEvent.UI_OPEN, initTUIO);
+			
 			addChild(gameScreen);
 			gameScreen.open();
-			
-			gameScreen.dispatcher.addEventListener(SkirmishEvent.UI_OPEN, initTUIO);
 		}
 		
 		private function initTUIO(e:Event) :void
 		{
-			listener = new TuioListener(gameScreen);
+			listener = new TuioListener();
 			socket = new UDPConnector();
 			tuio = new TuioClient(socket);
+			
 			tuio.addListener(listener);
+			addChild(listener);
 		}
 		
 		private function enterFrame(e:Event):void 
